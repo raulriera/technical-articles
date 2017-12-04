@@ -27,11 +27,17 @@ class MoviesViewController: FunctionalViewController {
 	
 	private func tableState() -> TableSection {		
 		let cells: [CellConfigType] = movies.map { movie in
+			let rowAction = UITableViewRowAction(style: .normal, title: "😙", handler: { _, _ in
+				print("Do something with the movie: \(movie.title)")
+			})
+			
 			let actions = CellActions(selectionAction: { [weak self] _ in
 				self?.present(movie: movie)
 				return .selected
-			})
+			}, rowActions: [rowAction])
+			
 			return LabelCell(key: "key-\(movie)",
+				style: CellStyle(highlight: true),
 				actions: actions,
 				state: LabelState(text: movie.title),
 				cellUpdater: LabelState.updateView)
